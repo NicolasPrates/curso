@@ -1,8 +1,10 @@
 package com.example.curso.config;
 
+import com.example.curso.entities.Category;
 import com.example.curso.entities.Order;
 import com.example.curso.entities.User;
 import com.example.curso.entities.enums.OrderStatus;
+import com.example.curso.repositories.CategoryRepository;
 import com.example.curso.repositories.OrderRepository;
 import com.example.curso.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +21,23 @@ public class TestConfig implements CommandLineRunner {
 
 
     private final UserRepository userRepository;
-
     private final OrderRepository orderRepository;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
-    public TestConfig(UserRepository userRepository, OrderRepository orderRepository) {
+    public TestConfig(UserRepository userRepository, OrderRepository orderRepository,
+                      CategoryRepository categoryRepository) {
         this.userRepository = userRepository;
         this.orderRepository = orderRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
     public void run(String... args) throws Exception {
+        Category cat1 = new Category(null, "Electronics");
+        Category cat2 = new Category(null, "Books");
+        Category cat3 = new Category(null, "Computers");
+
         User u1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
         User u2 = new User(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
 
@@ -39,5 +47,6 @@ public class TestConfig implements CommandLineRunner {
 
         userRepository.saveAll(Arrays.asList(u1, u2));
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+        categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
     }
 }
